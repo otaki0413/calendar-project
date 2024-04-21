@@ -6,6 +6,8 @@ import {
   endOfWeek,
   getDate,
   getMonth,
+  isSameMonth,
+  isToday,
   startOfMonth,
 } from "date-fns";
 import { DAYS_LIST } from "../../constants/calendar";
@@ -14,7 +16,12 @@ export const CalendarPage = () => {
   const today = new Date();
   const [dateList, setDateList] = useState<Date[][]>([]);
 
-  console.table(dateList);
+  const dateColor = (targetDate: Date, currentDate: Date): string => {
+    if (isToday(targetDate)) return "bg-lime-800 text-white rounded-full";
+    return isSameMonth(targetDate, currentDate)
+      ? "text-black"
+      : "text-gray-300";
+  };
 
   useEffect(() => {
     // 期間内の週開始日(日曜日)のみを含む配列
@@ -55,7 +62,12 @@ export const CalendarPage = () => {
                   key={`day-${getDate(item)}`}
                   className="bg-white h-[10vh] border-2 border-solid border-lime-800"
                 >
-                  <span className="inline-block w-[20px] leading-[20px] text-center">
+                  <span
+                    className={`inline-block w-[20px] leading-[20px] text-center ${dateColor(
+                      item,
+                      today
+                    )}`}
+                  >
                     {getDate(item)}
                   </span>
                 </td>
