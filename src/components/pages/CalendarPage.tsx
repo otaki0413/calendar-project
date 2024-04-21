@@ -3,7 +3,6 @@ import { loginUserState } from "../../store/loginUserState";
 
 export const CalendarPage = () => {
   const loginUser = useRecoilValue(loginUserState);
-  console.log(loginUser);
 
   return (
     <div>
